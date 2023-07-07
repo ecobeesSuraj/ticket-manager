@@ -74,6 +74,7 @@ export const login: RequestHandler = async (req, res) => {
     const { email, pwd } = req.body;
     const user = await prisma.user.findUniqueOrThrow({ where: { email } });
     const comparePassword: boolean = await bcrypt.compare(pwd, user.pwd);
+
     if (comparePassword) {
       var signedToken = jwt.sign({ user }, process.env.JWT_SECRET!, {
         expiresIn: "1d",
@@ -84,7 +85,7 @@ export const login: RequestHandler = async (req, res) => {
           httpOnly: true,
           maxAge: 2 * 24 * 60 * 60 * 1000,
         })
-        .redirect("/api/home");
+        .json({ user, signedToken });
     } else {
       throw new Error("Post Error");
     }

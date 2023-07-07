@@ -15,7 +15,8 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  boards Board[]
+  boards   Board[]
+  comments Comment[]
 }
 
 model Board {
@@ -98,5 +99,9 @@ model Notification {
 }
 
 model Comment {
-  id String @id @default(uuid())
+  id      String @id @default(uuid())
+  comment String
+  userId  String
+
+  User User @relation(fields: [userId], references: [id])
 }
