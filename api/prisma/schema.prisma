@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  pwd       String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  boards Board[]
+}
+
+model Board {
+  id      String   @id @default(uuid())
+  name    String
+  members String[]
+  adminId String
+
+  admin User @relation(fields: [adminId], references: [id])
+
+  backlog        Backlog[]
+  todo           ToDo[]
+  workInProgress WorkInProgress[]
+  inReview       InReview[]
+  mergeRequest   MergeRequest[]
+  completed      Completed[]
+}
+
+model Backlog {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model ToDo {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model WorkInProgress {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model InReview {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model MergeRequest {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model Completed {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  boardId String
+
+  board Board @relation(fields: [boardId], references: [id])
+}
+
+model Notification {
+  id String @id @default(uuid())
+}
