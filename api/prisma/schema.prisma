@@ -19,9 +19,8 @@ model User {
 }
 
 model Board {
-  id      String   @id @default(uuid())
+  id      String @id @default(uuid())
   name    String
-  members String[]
   adminId String
 
   admin User @relation(fields: [adminId], references: [id])
@@ -95,5 +94,9 @@ model Completed {
 }
 
 model Notification {
+  id String @id @default(uuid())
+}
+
+model Comment {
   id String @id @default(uuid())
 }

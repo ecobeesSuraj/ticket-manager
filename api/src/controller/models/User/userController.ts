@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { PrismaClient } from "@prisma/client";
-import { ProjectError } from "../../utils/errors";
+import { ProjectError } from "../../../utils/errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
